@@ -4,10 +4,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Building and Designing Bots and Bot Architectures</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/beige.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,8 +24,234 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h2>Building and Designing Bots and Bot Architectures</h2>
+				</section>
+				<section>
+					<h2>Bots vs. Chat Bots</h2>
+					<p><b>Bot</b>: An autonomous program on a network (especially the Internet) that can interact with computer systems or users, especially one designed to respond or behave like a player in an adventure game.</p>
+					<p><b>Chat Bot</b>: A computer program designed to simulate conversation with human users, especially over the Internet.</p>
+				</section>
+				<section>
+					<h2>Example Bots:</h2>
+					<p>Manage your calendar</p>
+					<p></p>
+				</section>
+				<section>
+					<h2>Bot Platforms:</h2>
+					<p></p>
+					<p></p>
+				</section>
+				<section>
+					<h2>Bot #1</h2>
+				</section>
+				<section>
+					<h2>Budget Bot</h2>
+					<p>Set a budget</p>
+					<p>Add and subtract from the budget</p>
+					<p>Get the budget balance</p>
+				</section>
+				<section>
+					<h2>Budget Bot Features</h2>
+					<p>Automatically register new users</p>
+					<p>Store users and budgets (in Cloudant)</p>
+					<p>Store every operation (in Cloudant)</p>
+				</section>
+				<section>
+					<h2>Budget Bot Platform</h2>
+					<p>Twilio</p>
+					<p>Send SMS Messages to a Twilio Phone #</p>
+					<p>Send SMS Messages back to the user</p>
+				</section>
+				<section>
+					<h2>Budget Bot</h2>
+					<img src="img/budget_ios_messages.png">
+				</section>
+				<section>
+					<h2>Budget Bot Architecture</h2>
+					<img src="img/budget_arch_twilio.png">
+				</section>
+				<section>
+					<h2>Twilio Programmable SMS</h2>
+					<img src="img/budget_twilio_setup.png">
+				</section>
+				<section>
+					<h2>Request from Twilio:</h2>
+					<pre>
+						<code data-trim data-noescape>
+https://myapplication.com/sms?From=%2B155512345678&Body=Get%20balance
+&...
+
+From = +155512345678
+
+Body = Get balance
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Determine the Operation:</h2>
+					<pre>
+						<code data-trim data-noescape>
+if (body.indexOf('set') >= 0) {
+    operation = 'set';
+}
+else if (body.indexOf('add') >= 0) {
+    operation = 'add';
+}
+else if (body.indexOf('subtract') >= 0) {
+    operation = 'subtract';
+}
+else if (body.indexOf('get') >= 0) {
+    operation = 'get';
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Determine the $ Amount:</h2>
+					<pre>
+						<code data-trim data-noescape>
+let amount;
+if (operation != 'get') {
+    let amountRegex = /\d*\.?\d+/g;
+    let amountMatches = body.match(amountRegex);
+    if (!amountMatches || amountMatches.length == 0) {
+        // return error - no amount specified
+    }
+    else if (amountMatches.length > 1) {
+        // return error - too many amounts specified
+    }
+    amount = Number(amountMatches[0]);
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Load or create the Budget:</h2>
+					<pre>
+						<code data-trim data-noescape>
+loadOrCreateBudget(cloudant, from, function (err, budget) {
+    // ...
+});
+
+function loadOrCreateBudget(cloudant, from, callback) {
+    // ...
+    if (! budgetExists) {
+        budget = {
+            _id: from,
+            balance: 0,
+            create_date: new Date().getTime()
+        };
+        saveBudget(cloudant, budget, callback);
+    }
+    // ...
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Update the Budget:</h2>
+					<pre>
+						<code data-trim data-noescape>
+if (operation == 'set') {
+    budget.balance = amount;
+}
+else if (operation == 'add') {
+    budget.balance += amount;
+}
+else if (operation == 'subtract') {
+    budget.balance -= amount;
+}
+saveBudget(cloudant, budget, function (err, budget) {
+    // ...
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Log the Message:</h2>
+					<pre>
+						<code data-trim data-noescape>
+let message = {
+    from: from,
+    body: body,
+    date: new Date().getTime(),
+    operation: operation,
+    amount: amount
+};
+saveMessage(cloudant, message, function (err, result) {
+    // ...
+});
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Return the Budget:</h2>
+					<pre>
+						<code data-trim data-noescape>
+"Your balance is $" + (Math.round(budget.balance * 100) / 100)
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Convert response to TwiML:</h2>
+					<pre>
+						<code data-trim data-noescape>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Response&gt;
+    &lt;Message&gt;Your balance is $90&lt;/Message&gt;
+&lt;/Response&gt;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Budget Bot Review</h2>
+					<img src="img/budget_arch_twilio.png">
+					<img src="img/budget_ios_messages.png">
+				</section>
+				<section>
+					<h2>Budget Bot State</h2>
+					<p>Request/response</p>
+					<p>No sessions or cookies</p>
+					<p>All budgets stored in Cloudant</p>
+				</section>
+				<section>
+					<h2>Serverless Budget Bot</h2>
+					<img src="img/budget_arch_twilio_serverless.png">
+				</section>
+				<section>
+					<h2>Why Serverless for Bots?</h2>
+					<p>Cost Effective</p>
+					<p>Auto Scaling</p>
+				</section>
+				<section>
+					<h2>Budget Bot on Other Platforms</h2>
+				</section>
+				<section>
+					<h2>Slack Budget Bot</h2>
+					<img src="img/budget_arch_slack_serverless.png">
+				</section>
+				<section>
+					<h2>Slack</h2>
+					<p><b>Slash Commands</b>: Enable users to interact with external services directly from Slack.</p>
+					<p><b>Bot Users</b>: Enable teams to <b>conversationally</b> interact with external services or your custom code.</p>
+				</section>
+				<section>
+					<h2>Bot #2</h2>
+				</section>
+				<section>
+					<h2>Hacker News Bot</h2>
+					<p><b>/hn</b> Slash Command to request top stories</p>
+					<p>Return top stories with links in Slack</p>
+				</section>
+				<section>
+					<h2>Hacker News Bot Architecture</h2>
+					<img src="img/hn_arch_slack.png">
+				</section>
+				<section>
+					<h2>Hacker News Bot Architecture</h2>
+					<img src="img/hn_arch_slack2.png">
+				</section>
 			</div>
 		</div>
 
