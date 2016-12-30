@@ -28,14 +28,22 @@
 					<h2>Building and Designing Bots and Bot Architectures</h2>
 				</section>
 				<section>
-					<h2>Bots vs. Chat Bots</h2>
+					<h2>Bots or Chat Bots</h2>
 					<p><b>Bot</b>: An autonomous program on a network (especially the Internet) that can interact with computer systems or users, especially one designed to respond or behave like a player in an adventure game.</p>
 					<p><b>Chat Bot</b>: A computer program designed to simulate conversation with human users, especially over the Internet.</p>
 				</section>
 				<section>
+					<h2>Bot</h2>
+					<p>An application or service that is consumed by exchanging messages, typically built on top of a messaging platform.</p>
+					<p>Little or no user interface development required.</p>
+					<p>It may or may not have conversational characteristics.</p>
+				</section>
+				<section>
 					<h2>Example Bots:</h2>
 					<p>Manage your calendar</p>
-					<p></p>
+					<p>Order a pizza</p>
+					<p>Pay your parking ticket</p>
+					<p>Automated technical support</p>
 				</section>
 				<section>
 					<h2>Bot Platforms:</h2>
@@ -52,20 +60,25 @@
 					<p>Get the budget balance</p>
 				</section>
 				<section>
-					<h2>Budget Bot Features</h2>
-					<p>Automatically register new users</p>
-					<p>Store users and budgets (in Cloudant)</p>
-					<p>Store every operation (in Cloudant)</p>
-				</section>
-				<section>
 					<h2>Budget Bot Platform</h2>
 					<p>Twilio</p>
 					<p>Send SMS Messages to a Twilio Phone #</p>
+					<p>Identify users based on the incoming phone number</p>
 					<p>Send SMS Messages back to the user</p>
 				</section>
 				<section>
 					<h2>Budget Bot</h2>
 					<img src="img/budget_ios_messages.png">
+				</section>
+				<section>
+					<h2>Budget Bot Requirements</h2>
+					<p>Automatically register new users</p>
+					<p>Store users and budgets (in Cloudant)</p>
+					<p>Store every operation (in Cloudant)</p>
+				</section>
+				<section>
+					<h2>Cloudant</h2>
+					<p>Stuff about Cloudant here</p>
 				</section>
 				<section>
 					<h2>Budget Bot Architecture</h2>
@@ -210,10 +223,11 @@ saveMessage(cloudant, message, function (err, result) {
 					<img src="img/budget_ios_messages.png">
 				</section>
 				<section>
-					<h2>Budget Bot State</h2>
-					<p>Request/response</p>
-					<p>No sessions or cookies</p>
-					<p>All budgets stored in Cloudant</p>
+					<h2>Budget Bot Review</h2>
+					<p>Twilio</p>
+					<p>Command/Response</p>
+					<p>Budgets and operations stored in Cloudant</p>
+					<p>Stateless</p>
 				</section>
 				<section>
 					<h2>Serverless Budget Bot</h2>
@@ -223,6 +237,10 @@ saveMessage(cloudant, message, function (err, result) {
 					<h2>Why Serverless for Bots?</h2>
 					<p>Cost Effective</p>
 					<p>Auto Scaling</p>
+				</section>
+				<section>
+					<h2>OpenWhisk</h2>
+					<p>Stuff about OpenWhisk</p>
 				</section>
 				<section>
 					<h2>Budget Bot on Other Platforms</h2>
@@ -251,6 +269,454 @@ saveMessage(cloudant, message, function (err, result) {
 				<section>
 					<h2>Hacker News Bot Architecture</h2>
 					<img src="img/hn_arch_slack2.png">
+				</section>
+				<section>
+					<h2>Slash Command</h2>
+					<img src="img/hn_slack_setup.png">
+				</section>
+				<section>
+					<h2>Slash Command</h2>
+					<img src="img/hn_slack_run_command.png">
+				</section>
+				<section>
+					<h2>Hacker News Bot</h2>
+					<img src="img/hn_slack_top_stories.png">
+				</section>
+				<section>
+					<h2>Request from Slack:</h2>
+					<pre>
+						<code data-trim data-noescape>
+POST https://myapplication.com/hn
+
+token=Vsxxxxxxxxxxxxxxxxxxxxxx&command=%2Fhn
+&team_id=TXXXXXXXX&team_domain=your-slack-team
+&channel_id=CXXXXXXXX&channel_name=test
+&user_id=UXXXXXXXX&user_name=markwatsonatx
+&text=&response_url=https%3A%2F%2Fhooks.slack.com%2Fcommands%2F...
+
+command = /hn
+response_url = https://hooks.slack.com/commands/...
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Initial Response to Slack:</h2>
+					<pre>
+						<code data-trim data-noescape>
+{
+   "text": "Top stories coming up..."
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Push Stories to Slack:</h2>
+					<pre>
+						<code data-trim data-noescape>
+{
+   "text": "",
+   "attachments": [
+      {
+         "title": "Child uses sleeping mom's thumbprint to buy $250...",
+         "title_link": "https://www.cnet.com/news/child-uses...",
+         "author_name": "21 points by dvdhnt | view comments",
+         "author_link": "https://news.ycombinator.com/item?id=132..."
+      },
+      {
+         ...
+      }
+   ]
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Slack Interactive Buttons:</h2>
+					<img src="img/hn_slack_top_stories_load_more.png">
+				</section>
+				<section>
+					<h2>Push Buttons with Stories to Slack:</h2>
+					<pre>
+						<code data-trim data-noescape>
+{
+   "text": "",
+   "attachments": [
+      { story1... },
+      { story2... },
+      {
+         ...,
+         "color": "#3AA3E3",
+         "actions": [{
+            "name": "hn_top_stories_more",
+            "text": "Load More",
+            "type": "button",
+            "value": startIndex + 10
+        }]
+      }
+   ]
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Slack Interactive Buttons:</h2>
+					<img src="img/hn_slack_message_setup.png">
+				</section>
+				<section>
+					<h2>Button Message Request from Slack:</h2>
+					<pre>
+						<code data-trim data-noescape>
+payload=%7B%22actions%22%3A%5B%7B%22name%22%3A%22hn_top_stories_more%22
+%2C%22value%22%3A%2210%22%7D%5D
+%2C%22response_url%22%3A
+%22https%3A%5C%2F%5C%2Fhooks.slack.com%5C%2Factions%5C...
+
+{
+   "actions":[
+      {
+         "name": "hn_top_stories_more",
+         "value": "10"
+      }
+   ],
+   ...,
+   "response_url":"https:\/\/hooks.slack.com\/actions\/..."
+}
+</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Button Message Request from Slack:</h2>
+					<pre>
+						<code data-trim data-noescape>
+var payload = JSON.parse(decodeURIComponent(params.payload));
+
+var action = payload.actions[0].name;
+
+var startIndex = Number(payload.actions[0].value);
+
+var responseUrl = payload.response_url;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Hacker News Bot Review</h2>
+					<p>Slack Slash Commands</p>
+					<p>Command/Response + Push</p>
+					<p>Stateless</p>
+					<p>Hacker News API</p>
+				</section>
+				<section>
+					<h2>Hacker News API</h2>
+					<p>One call to retrieve top story IDs</p>
+					<p>One call per story to retun contents</p>
+					<p>11 API calls per /hn command</p>
+					<p>100 commands = 1,100 Hacker News API requests</p>
+				</section>
+				<section>
+					<h2> Hacker News Bot with Redis</h2>
+					<img src="img/hn_arch_slack_redis.png">
+				</section>
+				<section>
+					<h2>Redis</h2>
+					<p>Stuff about redis</p>
+				</section>
+				<section>
+					<h2>Hacker News Bot with Redis</h2>
+					<p>Cache top stories for 1 minute</p>
+					<p>100 cmds/min w/o Redis = 1,100 Hacker News API requests</p>
+					<p>100 cmds/min w/ Redis = 11 Hacker News API requests + 101 Redis requests</p>
+				</section>
+				<section>
+					<h2>Bot Chart</h2>
+					<table class="reveal">
+						<tr>
+							<th></th>
+							<th>Bot #1: Budget</th>
+							<th>Bot #2: Hacker News</th>
+							<th></th>
+						</tr>
+						<tr>
+							<td><b>Platform</b></td>
+							<td>Twilio</td>
+							<td>Slack</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><b>Mode</b></td>
+							<td>Command/Response</td>
+							<td>Command/Response + Push</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><b>Stateless</b></td>
+							<td>Yes</td>
+							<td>Yes</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><b>Services</b></td>
+							<td>Cloudant</td>
+							<td>Hacker News API, Redis</td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section>
+					<h2>Bot #3</h2>
+				</section>
+				<section>
+					<h2>Recipe Bot</h2>
+					<p>Slack Bot User</p>
+					<p></p>
+				</section>
+				<section>
+					<h3>Start a conversation with the sous-chef bot by sending it a direct message:</h3>
+					<img src="img/recipe_bot_convo1.png">
+				</section>
+				<section>
+					<h3>Tell the sous-chef what you would like to do:</h3>
+					<img src="img/recipe_bot_convo2.png">
+				</section>
+				<section>
+					<h3>Reply to the sous-chef whether or not you would like to use specific ingredients:</h3>
+					<img src="img/recipe_bot_convo3.png">
+				</section>
+				<section>
+					<h3>Specify the ingredients or cuisine you would like to cook with:</h3>
+					<img src="img/recipe_bot_convo4.png">
+				</section>
+				<section>
+					<h3>Select the recipe you’d like to cook, and sous-chef will tell you how:</h3>
+					<img src="img/recipe_bot_convo5.png">
+				</section>
+				<section>
+					<h2>Recipe Bot Architecture</h2>
+					<img src="img/recipe_bot_arch.png">
+				</section>
+				<section>
+					<h2>Slackbot</h2>
+					<p>Receive message from Slack on WebSockert</p>
+					
+				</section>
+				<section>
+					<h2>Slackbot</h2>
+					<p>Code here to receive message and send to Watson Conversation</p>
+				</section>
+				<section>
+					<h2>Watson Conversation</h2>
+					<p>Watson Conversation combines a number of cognitive techniques to help you build and train a bot - defining intents and entities and crafting dialog to simulate conversation.</p>
+				</section>
+				<section>
+					<h2>Watson Conversation Concepts</h2>
+					<p>Intents</p>
+					<p>Entities</p>
+					<p>Dialog</p>
+					<p>Context</p>
+				</section>
+				<section>
+					<h2>Intents</h2>
+					<img src="img/recipe_bot_wc_intents.png">
+				</section>
+				<section>
+					<h2>Start Cooking Intent</h2>
+					<img src="img/recipe_bot_wc_intent1.png">
+				</section>
+				<section>
+					<h2>Entities</h2>
+					<img src="img/recipe_bot_wc_entities.png">
+				</section>
+				<section>
+					<h2>System Entities</h2>
+					<img src="img/recipe_bot_wc_entities_system.png">
+				</section>
+				<section>
+					<h2>Dialogs</h2>
+					<img src="img/recipe_bot_wc_dialog1.png">
+				</section>
+				<section>
+					<h2>Dialogs</h2>
+					<img src="img/recipe_bot_wc_dialog2.png">
+				</section>
+				<section>
+					<h2>Dialogs</h2>
+					<img src="img/recipe_bot_wc_dialog3.png">
+				</section>
+				<section>
+					<h2>Dialogs</h2>
+					<img src="img/recipe_bot_wc_dialog4.png">
+				</section>
+				<section>
+					<h2>Dialogs</h2>
+					<img src="img/recipe_bot_wc_dialog1.png">
+				</section>
+				<section>
+					<h2>Context</h2>
+					<p>Passed between Watson Conversation and application</p>
+					<p>Keeps track of current dialog in the conversation</p>
+				</section>
+				<section>
+					<h2>Context</h2>
+					<pre>
+						<code data-trim data-noescape>
+# send message to watson conversation
+watson_response = self.conversation_client.message(
+   workspace_id=self.conversation_workspace_id,
+   message_input={'text': message},
+   context=state.conversation_context
+)
+
+# update conversation context
+state.conversation_context = watson_response['context']
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Context</h2>
+					<p>Add custom variables to the context for use in your bot</p>
+				</section>
+				<section>
+					<h2>Context</h2>
+					<img src="img/recipe_bot_wc_context1.png">
+				</section>
+				<section>
+					<img src="img/recipe_bot_wc_context2.png">
+					<img src="img/recipe_bot_wc_context3.png">
+				</section>
+				<section>
+					<h2>Context</h2>
+					<pre>
+						<code data-trim data-noescape>
+if 'is_ingredients' in state.conversation_context.keys() 
+  and state.conversation_context['is_ingredients']:
+    response = self.handle_ingredients_message(state, message)
+
+elif watson_response['entities']
+  and watson_response['entities'][0]['entity'] == 'cuisine':
+    cuisine = watson_response['entities'][0]['value']
+    response = self.handle_cuisine_message(state, cuisine)
+    					</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Recipe Bot Review</h2>
+					<p>Slack Bot User</p>
+					<p>Conversational</p>
+					<p>State needs to be managed</p>
+					<p>Nothing is persisted</p>
+				</section>
+				<section>
+					<h2>Recipe Bot Persistence</h2>
+					<p>Cache 3rd Party API Calls</p>
+					<p>Blah blah blah</p>
+				</section>
+				<section>
+					<h2> Recipe Bot with Cloudant</h2>
+					<img src="img/recipe_bot_arch_cloudant.png">
+				</section>
+				<section>
+					<h2> Recipe Bot with Cloudant</h2>
+					<pre>
+						<code data-trim data-noescape>
+{
+   "type": "user",
+   "name": "UXXXXXXXX",
+   "ingredients": [{
+      "name": "tomatoes",
+      "count": 3
+   }],
+   "cuisines": [{
+      "name": "italian",
+      "count": 4
+   }],
+   "recipes": [{
+      "id": "833235",
+      "title": "Sliced Cucumber and Tomato Salad",
+      "count": 2
+   }]
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Favorite Recipes</h2>
+					<img src="img/recipe_bot_convo_favorite.png">
+				</section>
+				<section>
+					<h2>Favorite Intent</h2>
+					<img src="img/recipe_bot_wc_intent_favorite.png">
+				</section>
+				<section>
+					<h2>Favorite Dialog</h2>
+					<img src="img/recipe_bot_wc_dialog_favorite.png">
+				</section>
+				
+				<section>
+					<h2>Context</h2>
+					<pre>
+						<code data-trim data-noescape>
+if 'is_favorites' in state.conversation_context.keys()
+  and state.conversation_context['is_favorites']:
+    response = self.handle_favorites_message(state)
+
+def handle_favorites_message(self, state):
+    recipes = self.recipe_store.find_favorite_recipes_for_user...
+    					</code>
+					</pre>
+				</section>
+				<section>
+					<h2>IBM Graph</h2>
+					<p>Stuff about IBM Graph</p>
+				</section>
+				<section>
+					<h2>Recipe Bot with IBM Graph</h2>
+					<img src="img/recipe_bot_arch_graph.png">
+				</section>
+				<section>
+					<h2>Visualize</h2>
+					<p>Dashboard Screenshot Here</p>
+				</section>
+				<section>
+					<h2>IBM Graph</h2>
+					<p>Stuff about IBM Graph</p>
+				</section>
+				<section>
+					<h2>Bot Chart</h2>
+					<table class="reveal">
+						<tr>
+							<th></th>
+							<th>Bot #1: Budget</th>
+							<th>Bot #2: HN</th>
+							<th>Bot #3: Recipe</th>
+						</tr>
+						<tr>
+							<td><b>Platform</b></td>
+							<td>Twilio</td>
+							<td>Slack</td>
+							<td>Slack</td>
+						</tr>
+						<tr>
+							<td><b>Mode</b></td>
+							<td>Command/Response</td>
+							<td>Command/Response + Push</td>
+							<td>Conversational</td>
+						</tr>
+						<tr>
+							<td><b>Stateless</b></td>
+							<td>Yes</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td><b>Services</b></td>
+							<td>Cloudant</td>
+							<td>Hacker News API</td>
+							<td>Watson Conversation, IBM Graph, Spoonacular</td>
+						</tr>
+					</table>
+				</section>
+				<section>
+					<h2>Custom Bot Platform/Offline Support</h2>
+					<p>Blah blah blah</p>
 				</section>
 			</div>
 		</div>
