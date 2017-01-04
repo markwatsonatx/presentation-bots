@@ -8,6 +8,7 @@
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/beige.css">
+		<link rel="stylesheet" href="css/presentation.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -28,27 +29,52 @@
 					<h2>Building and Designing Bots and Bot Architectures</h2>
 				</section>
 				<section>
-					<h2>Bots or Chat Bots</h2>
-					<p><b>Bot</b>: An autonomous program on a network (especially the Internet) that can interact with computer systems or users, especially one designed to respond or behave like a player in an adventure game.</p>
-					<p><b>Chat Bot</b>: A computer program designed to simulate conversation with human users, especially over the Internet.</p>
+					<h2>What is a bot?</h2>
+					<p>An application or service that users interact with through the exchange of messages.</p>
 				</section>
 				<section>
-					<h2>Bot</h2>
-					<p>An application or service that is consumed by exchanging messages, typically built on top of a messaging platform.</p>
+					<h2>Characteristics of Building a bot</h2>
+					<p>Typically built on top of a messaging platform.</p>
 					<p>Little or no user interface development required.</p>
-					<p>It may or may not have conversational characteristics.</p>
+					<p>It may or may not simulate a conversation.</p>
 				</section>
 				<section>
-					<h2>Example Bots:</h2>
-					<p>Manage your calendar</p>
-					<p>Order a pizza</p>
-					<p>Pay your parking ticket</p>
-					<p>Automated technical support</p>
+					<h2>Examples</h2>
 				</section>
 				<section>
-					<h2>Bot Platforms:</h2>
-					<p></p>
-					<p></p>
+					<h2>Order Tacos</h2>
+					<img src="img/example_food.png">
+				</section>
+				<section>
+					<h2>Appeal your parking ticket</h2>
+					<img src="img/example_parking.png">
+				</section>
+				<section>
+					<h2>Schedule a meeting</h2>
+					<img src="img/example_meeting.png">
+				</section>
+				<section>
+					<h2>Raise awareness</h2>
+					<img src="img/example_awareness.jpg">
+				</section>
+				<section>
+					<h2>Bot Platforms</h2>
+					<p>Facebook Messenger</p>
+					<p>Kik</p>
+					<p>Skype</p>
+					<p>Slack</p>
+					<p>Twilio</p>
+				</section>
+				<section>
+					<h2>Bot Frameworks</h2>
+					<p>Microsoft Bot Framework</p>
+					<p>Botkit</p>
+				</section>
+				<section>
+					<h2>Conversational/Natural Language Processing Platforms</h2>
+					<p>api.ai</p>
+					<p>wit.ai (acquired by Facebook)</p>
+					<p>Watson Conversation</p>
 				</section>
 				<section>
 					<h2>Bot #1</h2>
@@ -60,36 +86,44 @@
 					<p>Get the budget balance</p>
 				</section>
 				<section>
+					<h2>Budget Bot Goals</h2>
+					<p>No user interface</p>
+					<p>No app store</p>
+					<p>Voice activated</p>
+					<p>No user registration</p>
+					<p>Easily set, update, and retrieve budgets</p>
+					<p>Store every message for analysis</p>
+				</section>
+				<section>
 					<h2>Budget Bot Platform</h2>
 					<p>Twilio</p>
-					<p>Send SMS Messages to a Twilio Phone #</p>
+					<p>Send SMS Messages to a Twilio Phone # (can use Siri, OK Google, etc)</p>
 					<p>Identify users based on the incoming phone number</p>
-					<p>Send SMS Messages back to the user</p>
+					<p>Store users and budgets in Cloudant</p>
+					<p>Send SMS Messages back to the calling user</p>
 				</section>
 				<section>
 					<h2>Budget Bot</h2>
 					<img src="img/budget_ios_messages.png">
 				</section>
 				<section>
-					<h2>Budget Bot Requirements</h2>
-					<p>Automatically register new users</p>
-					<p>Store users and budgets (in Cloudant)</p>
-					<p>Store every operation (in Cloudant)</p>
-				</section>
-				<section>
-					<h2>Cloudant</h2>
-					<p>Stuff about Cloudant here</p>
-				</section>
-				<section>
 					<h2>Budget Bot Architecture</h2>
 					<img src="img/budget_arch_twilio.png">
 				</section>
 				<section>
-					<h2>Twilio Programmable SMS</h2>
+					<h2>Cloudant</h2>
+					<p>Fully-managed NoSQL DBaaS</p>
+					<p>Based on CouchDB</p>
+				</section>
+				<section>
+					<h2>How It Works</h2>
+				</section>
+				<section>
+					<h2>Twilio Setup</h2>
 					<img src="img/budget_twilio_setup.png">
 				</section>
 				<section>
-					<h2>Request from Twilio:</h2>
+					<h2>Request from Twilio</h2>
 					<pre>
 						<code data-trim data-noescape>
 https://myapplication.com/sms?From=%2B155512345678&Body=Get%20balance
@@ -102,7 +136,7 @@ Body = Get balance
 					</pre>
 				</section>
 				<section>
-					<h2>Determine the Operation:</h2>
+					<h2>Determine the Operation</h2>
 					<pre>
 						<code data-trim data-noescape>
 if (body.indexOf('set') >= 0) {
@@ -121,7 +155,7 @@ else if (body.indexOf('get') >= 0) {
 					</pre>
 				</section>
 				<section>
-					<h2>Determine the $ Amount:</h2>
+					<h2>Determine the $ Amount</h2>
 					<pre>
 						<code data-trim data-noescape>
 let amount;
@@ -140,7 +174,7 @@ if (operation != 'get') {
 					</pre>
 				</section>
 				<section>
-					<h2>Load or create the Budget:</h2>
+					<h2>Load or create the Budget</h2>
 					<pre>
 						<code data-trim data-noescape>
 loadOrCreateBudget(cloudant, from, function (err, budget) {
@@ -163,7 +197,7 @@ function loadOrCreateBudget(cloudant, from, callback) {
 					</pre>
 				</section>
 				<section>
-					<h2>Update the Budget:</h2>
+					<h2>Update the Budget</h2>
 					<pre>
 						<code data-trim data-noescape>
 if (operation == 'set') {
@@ -182,7 +216,7 @@ saveBudget(cloudant, budget, function (err, budget) {
 					</pre>
 				</section>
 				<section>
-					<h2>Log the Message:</h2>
+					<h2>Log the Message</h2>
 					<pre>
 						<code data-trim data-noescape>
 let message = {
@@ -199,7 +233,7 @@ saveMessage(cloudant, message, function (err, result) {
 					</pre>
 				</section>
 				<section>
-					<h2>Return the Budget:</h2>
+					<h2>Return the Budget</h2>
 					<pre>
 						<code data-trim data-noescape>
 "Your balance is $" + (Math.round(budget.balance * 100) / 100)
@@ -207,7 +241,7 @@ saveMessage(cloudant, message, function (err, result) {
 					</pre>
 				</section>
 				<section>
-					<h2>Convert response to TwiML:</h2>
+					<h2>Convert response to TwiML</h2>
 					<pre>
 						<code data-trim data-noescape>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -226,11 +260,12 @@ saveMessage(cloudant, message, function (err, result) {
 					<h2>Budget Bot Review</h2>
 					<p>Twilio</p>
 					<p>Command/Response</p>
-					<p>Budgets and operations stored in Cloudant</p>
+					<p>Budgets and messages stored in Cloudant</p>
 					<p>Stateless</p>
 				</section>
 				<section>
-					<h2>Serverless Budget Bot</h2>
+					<h2>Moving to Serverless</h2>
+					<img src="img/budget_arch_twilio.png">
 					<img src="img/budget_arch_twilio_serverless.png">
 				</section>
 				<section>
@@ -240,42 +275,29 @@ saveMessage(cloudant, message, function (err, result) {
 				</section>
 				<section>
 					<h2>OpenWhisk</h2>
-					<p>Stuff about OpenWhisk</p>
+					<p>Open Source</p>
+					<p>Javascript, Python, Docker, Swift</p>
 				</section>
-				<section>
-					<h2>Budget Bot on Other Platforms</h2>
-				</section>
-				<section>
-					<h2>Slack Budget Bot</h2>
-					<img src="img/budget_arch_slack_serverless.png">
-				</section>
-				<section>
-					<h2>Slack</h2>
-					<p><b>Slash Commands</b>: Enable users to interact with external services directly from Slack.</p>
-					<p><b>Bot Users</b>: Enable teams to <b>conversationally</b> interact with external services or your custom code.</p>
-				</section>
+				<!--<section>-->
+					<!--<h2>Budget Bot on Other Platforms</h2>-->
+				<!--</section>-->
+				<!--<section>-->
+					<!--<h2>Slack Budget Bot</h2>-->
+					<!--<img src="img/budget_arch_twilio_serverless.png">-->
+					<!--<img src="img/budget_arch_slack_serverless.png">-->
+				<!--</section>-->
 				<section>
 					<h2>Bot #2</h2>
 				</section>
 				<section>
 					<h2>Hacker News Bot</h2>
-					<p><b>/hn</b> Slash Command to request top stories</p>
-					<p>Return top stories with links in Slack</p>
-				</section>
-				<section>
-					<h2>Hacker News Bot Architecture</h2>
-					<img src="img/hn_arch_slack.png">
-				</section>
-				<section>
-					<h2>Hacker News Bot Architecture</h2>
-					<img src="img/hn_arch_slack2.png">
+					<p>Slack</p>
+					<p>Request top Hacker News stories in Slack</p>
+					<p>Display top stories with links to the comments and articles</p>
 				</section>
 				<section>
 					<h2>Slash Command</h2>
-					<img src="img/hn_slack_setup.png">
-				</section>
-				<section>
-					<h2>Slash Command</h2>
+					<p>Enable users to interact with external services directly from Slack.</p>
 					<img src="img/hn_slack_run_command.png">
 				</section>
 				<section>
@@ -283,7 +305,24 @@ saveMessage(cloudant, message, function (err, result) {
 					<img src="img/hn_slack_top_stories.png">
 				</section>
 				<section>
-					<h2>Request from Slack:</h2>
+					<h2>Hacker News Bot Architecture</h2>
+					<img src="img/hn_arch_slack.png">
+				</section>
+				<section>
+					<h2>Hacker News Bot Architecture</h2>
+					<p>Initial response <= 3 seconds</p>
+					<p>response_url provided for sending message</p>
+					<img src="img/hn_arch_slack2.png">
+				</section>
+				<section>
+					<h2>How It Works</h2>
+				</section>
+				<section>
+					<h2>Slack Setup</h2>
+					<img src="img/hn_slack_setup.png">
+				</section>
+				<section>
+					<h2>Request from Slack</h2>
 					<pre>
 						<code data-trim data-noescape>
 POST https://myapplication.com/hn
@@ -300,7 +339,7 @@ response_url = https://hooks.slack.com/commands/...
 					</pre>
 				</section>
 				<section>
-					<h2>Initial Response to Slack:</h2>
+					<h2>Initial Response to Slack</h2>
 					<pre>
 						<code data-trim data-noescape>
 {
@@ -310,7 +349,7 @@ response_url = https://hooks.slack.com/commands/...
 					</pre>
 				</section>
 				<section>
-					<h2>Push Stories to Slack:</h2>
+					<h2>Push Stories to Slack</h2>
 					<pre>
 						<code data-trim data-noescape>
 {
@@ -331,11 +370,11 @@ response_url = https://hooks.slack.com/commands/...
 					</pre>
 				</section>
 				<section>
-					<h2>Slack Interactive Buttons:</h2>
+					<h2>Slack Interactive Buttons</h2>
 					<img src="img/hn_slack_top_stories_load_more.png">
 				</section>
 				<section>
-					<h2>Push Buttons with Stories to Slack:</h2>
+					<h2>Push Buttons with Stories to Slack</h2>
 					<pre>
 						<code data-trim data-noescape>
 {
@@ -359,11 +398,11 @@ response_url = https://hooks.slack.com/commands/...
 					</pre>
 				</section>
 				<section>
-					<h2>Slack Interactive Buttons:</h2>
+					<h2>Slack Setup</h2>
 					<img src="img/hn_slack_message_setup.png">
 				</section>
 				<section>
-					<h2>Button Message Request from Slack:</h2>
+					<h2>Button Message Request from Slack</h2>
 					<pre>
 						<code data-trim data-noescape>
 payload=%7B%22actions%22%3A%5B%7B%22name%22%3A%22hn_top_stories_more%22
@@ -385,22 +424,8 @@ payload=%7B%22actions%22%3A%5B%7B%22name%22%3A%22hn_top_stories_more%22
 					</pre>
 				</section>
 				<section>
-					<h2>Button Message Request from Slack:</h2>
-					<pre>
-						<code data-trim data-noescape>
-var payload = JSON.parse(decodeURIComponent(params.payload));
-
-var action = payload.actions[0].name;
-
-var startIndex = Number(payload.actions[0].value);
-
-var responseUrl = payload.response_url;
-						</code>
-					</pre>
-				</section>
-				<section>
 					<h2>Hacker News Bot Review</h2>
-					<p>Slack Slash Commands</p>
+					<p>Slack Slash Command</p>
 					<p>Command/Response + Push</p>
 					<p>Stateless</p>
 					<p>Hacker News API</p>
@@ -408,17 +433,19 @@ var responseUrl = payload.response_url;
 				<section>
 					<h2>Hacker News API</h2>
 					<p>One call to retrieve top story IDs</p>
-					<p>One call per story to retun contents</p>
+					<p>One call per story to return contents</p>
 					<p>11 API calls per /hn command</p>
 					<p>100 commands = 1,100 Hacker News API requests</p>
 				</section>
 				<section>
-					<h2> Hacker News Bot with Redis</h2>
-					<img src="img/hn_arch_slack_redis.png">
+					<h2>Redis</h2>
+					<p>In-memory datastore</p>
+					<p>Commonly used for session cache</p>
+					<p>Fully managed using Compose for Redis</p>
 				</section>
 				<section>
-					<h2>Redis</h2>
-					<p>Stuff about redis</p>
+					<h2> Hacker News Bot with Redis</h2>
+					<img src="img/hn_arch_slack_redis.png">
 				</section>
 				<section>
 					<h2>Hacker News Bot with Redis</h2>
@@ -427,7 +454,7 @@ var responseUrl = payload.response_url;
 					<p>100 cmds/min w/ Redis = 11 Hacker News API requests + 101 Redis requests</p>
 				</section>
 				<section>
-					<h2>Bot Chart</h2>
+					<h2>Bots Review</h2>
 					<table class="reveal">
 						<tr>
 							<th></th>
@@ -466,8 +493,14 @@ var responseUrl = payload.response_url;
 				</section>
 				<section>
 					<h2>Recipe Bot</h2>
-					<p>Slack Bot User</p>
-					<p></p>
+					<p>Conversational bot</p>
+					<p>Provides recipe suggestions and instructions based on ingredients or cuisines</p>
+				</section>
+				<section>
+					<h2>Slack Bot User</h2>
+					<p>Enable teams to <b>conversationally</b> interact with external services or your custom code.</p>
+					<img src="img/slack_bot_user1.png">
+					<img src="img/slack_bot_user2.png">
 				</section>
 				<section>
 					<h3>Start a conversation with the sous-chef bot by sending it a direct message:</h3>
@@ -494,13 +527,64 @@ var responseUrl = payload.response_url;
 					<img src="img/recipe_bot_arch.png">
 				</section>
 				<section>
-					<h2>Slackbot</h2>
-					<p>Receive message from Slack on WebSockert</p>
-					
+					<h2>Hot It Works</h2>
 				</section>
 				<section>
-					<h2>Slackbot</h2>
-					<p>Code here to receive message and send to Watson Conversation</p>
+					<h2>Read messages from Slack Real Time Messaging API</h2>
+					<pre>
+						<code data-trim data-noescape>
+while self.running:
+   if self.slack_client.rtm_connect():
+      while self.running:
+         slack_output = self.slack_client.rtm_read()
+         message, message_sender, channel = self.parse_slack_output...
+         if message and channel:
+            self.handle_message(message, message_sender, channel)
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Forward messages to Watson Conversation</h2>
+					<pre>
+						<code data-trim data-noescape>
+watson_response = self.conversation_client.message(
+   workspace_id=self.conversation_workspace_id,
+   message_input={'text': message},
+   context=state.conversation_context)
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Handle the Watson Conversation response</h2>
+					<pre>
+						<code data-trim data-noescape>
+if 'is_ingredients' in state.conversation_context.keys()...:
+   response = self.handle_ingredients_message(state, message)
+elif 'is_selection' in state.conversation_context.keys()...:
+   response = self.handle_selection_message(state)
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Query Spoonacular for Recipes</h2>
+					<pre>
+						<code data-trim data-noescape>
+matching_recipes = self.recipe_client.find_by_ingredients(ingredients_str)
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Send the message to the user</h2>
+					<pre>
+						<code data-trim data-noescape>
+self.slack_client.api_call(
+   "chat.postMessage",
+   channel=channel,
+   text=response,
+   as_user=True
+)
+						</code>
+					</pre>
 				</section>
 				<section>
 					<h2>Watson Conversation</h2>
@@ -576,7 +660,7 @@ state.conversation_context = watson_response['context']
 				</section>
 				<section>
 					<h2>Context</h2>
-					<img src="img/recipe_bot_wc_context1.png">
+					<img src="img/recipe_bot_wc_context1b.png">
 				</section>
 				<section>
 					<img src="img/recipe_bot_wc_context2.png">
@@ -607,7 +691,8 @@ elif watson_response['entities']
 				<section>
 					<h2>Recipe Bot Persistence</h2>
 					<p>Cache 3rd Party API Calls</p>
-					<p>Blah blah blah</p>
+					<p>Track usage</p>
+					<p>Provide a more personal experience</p>
 				</section>
 				<section>
 					<h2> Recipe Bot with Cloudant</h2>
