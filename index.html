@@ -438,10 +438,15 @@ payload=%7B%22actions%22%3A%5B%7B%22name%22%3A%22hn_top_stories_more%22
 					<p>100 commands = 1,100 Hacker News API requests</p>
 				</section>
 				<section>
+					<h2>Cache</h2>
+					<p>Top stories don't change very often</p>
+					<p>Caching top stories for 1 minute can cut down on thousands of API calls</p>
+				</section>
+				<section>
 					<h2>Redis</h2>
 					<p>In-memory datastore</p>
 					<p>Commonly used for session cache</p>
-					<p>Fully managed using Compose for Redis</p>
+					<p>Fully-managed using Compose for Redis</p>
 				</section>
 				<section>
 					<h2> Hacker News Bot with Redis</h2>
@@ -630,10 +635,6 @@ self.slack_client.api_call(
 					<img src="img/recipe_bot_wc_dialog4.png">
 				</section>
 				<section>
-					<h2>Dialogs</h2>
-					<img src="img/recipe_bot_wc_dialog1.png">
-				</section>
-				<section>
 					<h2>Context</h2>
 					<p>Passed between Watson Conversation and application</p>
 					<p>Keeps track of current dialog in the conversation</p>
@@ -660,7 +661,7 @@ state.conversation_context = watson_response['context']
 				</section>
 				<section>
 					<h2>Context</h2>
-					<img src="img/recipe_bot_wc_context1b.png">
+					<img src="img/recipe_bot_wc_context1.png">
 				</section>
 				<section>
 					<img src="img/recipe_bot_wc_context2.png">
@@ -691,34 +692,67 @@ elif watson_response['entities']
 				<section>
 					<h2>Recipe Bot Persistence</h2>
 					<p>Cache 3rd Party API Calls</p>
-					<p>Track usage</p>
+					<p>Track user habits</p>
 					<p>Provide a more personal experience</p>
 				</section>
+				<!--<section>-->
+					<!--<h2> Recipe Bot with Cloudant</h2>-->
+					<!--<img src="img/recipe_bot_arch_cloudant.png">-->
+				<!--</section>-->
+				<!--<section>-->
+					<!--<h2> Recipe Bot with Cloudant</h2>-->
+					<!--<pre>-->
+						<!--<code data-trim data-noescape>-->
+<!--{-->
+   <!--"type": "user",-->
+   <!--"name": "UXXXXXXXX",-->
+   <!--"ingredients": [{-->
+      <!--"name": "tomatoes",-->
+      <!--"count": 3-->
+   <!--}],-->
+   <!--"cuisines": [{-->
+      <!--"name": "italian",-->
+      <!--"count": 4-->
+   <!--}],-->
+   <!--"recipes": [{-->
+      <!--"id": "833235",-->
+      <!--"title": "Sliced Cucumber and Tomato Salad",-->
+      <!--"count": 2-->
+   <!--}]-->
+<!--}-->
+						<!--</code>-->
+					<!--</pre>-->
+				<!--</section>-->
 				<section>
-					<h2> Recipe Bot with Cloudant</h2>
-					<img src="img/recipe_bot_arch_cloudant.png">
+					<h2>Recipe Bot with IBM Graph</h2>
+					<img src="img/recipe_bot_arch_graph.png">
 				</section>
 				<section>
-					<h2> Recipe Bot with Cloudant</h2>
+					<h2>IBM Graph</h2>
+					<p>Fully-managed Graph DBaaS</p>
+					<p>Based on Apache TinkerPop</p>
+				</section>
+				<section>
+					<h2> Recipe Bot with IBM Graph</h2>
+					<img src="img/recipe_bot_graph_dashboard1.png">
+				</section>
+				<section>
+					<h2> Recipe Bot with IBM Graph</h2>
+					<img src="img/recipe_bot_graph_dashboard3.png">
+					<img src="img/recipe_bot_graph_dashboard4.png">
 					<pre>
 						<code data-trim data-noescape>
-{
-   "type": "user",
-   "name": "UXXXXXXXX",
-   "ingredients": [{
-      "name": "tomatoes",
-      "count": 3
-   }],
-   "cuisines": [{
-      "name": "italian",
-      "count": 4
-   }],
-   "recipes": [{
-      "id": "833235",
-      "title": "Sliced Cucumber and Tomato Salad",
-      "count": 2
-   }]
-}
+{                                      {
+   "type": "edge",                        "type": "edge",
+   "outVLabel": "person",                 "outVLabel": "person",
+   "outV": 4256,                          "outV": 4256,
+   "label": "selects",                    "label": "selects",
+   "inVLabel": "ingredient",              "inVLabel": "recipe",
+   "inV": 40964168,                       "inV": 4296,
+   "properties": {                        "properties": {
+      "count": 3                             "count": 2
+   }                                      }
+}                                      }
 						</code>
 					</pre>
 				</section>
@@ -749,23 +783,7 @@ def handle_favorites_message(self, state):
 					</pre>
 				</section>
 				<section>
-					<h2>IBM Graph</h2>
-					<p>Stuff about IBM Graph</p>
-				</section>
-				<section>
-					<h2>Recipe Bot with IBM Graph</h2>
-					<img src="img/recipe_bot_arch_graph.png">
-				</section>
-				<section>
-					<h2>Visualize</h2>
-					<p>Dashboard Screenshot Here</p>
-				</section>
-				<section>
-					<h2>IBM Graph</h2>
-					<p>Stuff about IBM Graph</p>
-				</section>
-				<section>
-					<h2>Bot Chart</h2>
+					<h2>Bots</h2>
 					<table class="reveal">
 						<tr>
 							<th></th>
@@ -781,8 +799,8 @@ def handle_favorites_message(self, state):
 						</tr>
 						<tr>
 							<td><b>Mode</b></td>
-							<td>Command/Response</td>
-							<td>Command/Response + Push</td>
+							<td>Cmd/Resp</td>
+							<td>Cmd/Resp + Push</td>
 							<td>Conversational</td>
 						</tr>
 						<tr>
@@ -799,10 +817,9 @@ def handle_favorites_message(self, state):
 						</tr>
 					</table>
 				</section>
-				<section>
-					<h2>Custom Bot Platform/Offline Support</h2>
-					<p>Blah blah blah</p>
-				</section>
+				<!--<section>-->
+					<!--<h2>Custom Bot Platform/Offline Support</h2>-->
+				<!--</section>-->
 			</div>
 		</div>
 
