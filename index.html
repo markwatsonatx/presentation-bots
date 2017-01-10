@@ -239,8 +239,6 @@ saveMessage(cloudant, message, function (err, result) {
 "Your balance is $" + (Math.round(budget.balance * 100) / 100)
 						</code>
 					</pre>
-				</section>
-				<section>
 					<h2>Convert response to TwiML</h2>
 					<pre>
 						<code data-trim data-noescape>
@@ -250,11 +248,6 @@ saveMessage(cloudant, message, function (err, result) {
 &lt;/Response&gt;
 						</code>
 					</pre>
-				</section>
-				<section>
-					<h2>Budget Bot Review</h2>
-					<img src="img/budget_arch_twilio.png">
-					<img src="img/budget_ios_messages.png">
 				</section>
 				<section>
 					<h2>Budget Bot Review</h2>
@@ -291,18 +284,16 @@ saveMessage(cloudant, message, function (err, result) {
 				</section>
 				<section>
 					<h2>Hacker News Bot</h2>
-					<p>Slack</p>
 					<p>Request top Hacker News stories in Slack</p>
 					<p>Display top stories with links to the comments and articles</p>
 				</section>
 				<section>
 					<h2>Slash Command</h2>
-					<p>Enable users to interact with external services directly from Slack.</p>
 					<img src="img/hn_slack_run_command.png">
 				</section>
 				<section>
 					<h2>Hacker News Bot</h2>
-					<img src="img/hn_slack_top_stories.png">
+					<img src="img/hn_slack_top_stories2.png">
 				</section>
 				<section>
 					<h2>Hacker News Bot Architecture</h2>
@@ -439,7 +430,7 @@ payload=%7B%22actions%22%3A%5B%7B%22name%22%3A%22hn_top_stories_more%22
 				</section>
 				<section>
 					<h2>Cache</h2>
-					<p>Top stories don't change very often</p>
+					<p>Top stories may not change very often</p>
 					<p>Caching top stories for 1 minute can cut down on thousands of API calls</p>
 				</section>
 				<section>
@@ -532,7 +523,7 @@ payload=%7B%22actions%22%3A%5B%7B%22name%22%3A%22hn_top_stories_more%22
 					<img src="img/recipe_bot_arch.png">
 				</section>
 				<section>
-					<h2>Hot It Works</h2>
+					<h2>How It Works</h2>
 				</section>
 				<section>
 					<h2>Read messages from Slack Real Time Messaging API</h2>
@@ -555,7 +546,8 @@ while self.running:
 watson_response = self.conversation_client.message(
    workspace_id=self.conversation_workspace_id,
    message_input={'text': message},
-   context=state.conversation_context)
+   context=state.conversation_context
+)
 						</code>
 					</pre>
 				</section>
@@ -565,6 +557,7 @@ watson_response = self.conversation_client.message(
 						<code data-trim data-noescape>
 if 'is_ingredients' in state.conversation_context.keys()...:
    response = self.handle_ingredients_message(state, message)
+
 elif 'is_selection' in state.conversation_context.keys()...:
    response = self.handle_selection_message(state)
 						</code>
@@ -574,7 +567,7 @@ elif 'is_selection' in state.conversation_context.keys()...:
 					<h2>Query Spoonacular for Recipes</h2>
 					<pre>
 						<code data-trim data-noescape>
-matching_recipes = self.recipe_client.find_by_ingredients(ingredients_str)
+matching_recipes = self.recipe_client.find_by_ingredients(ingredients)
 						</code>
 					</pre>
 				</section>
@@ -687,7 +680,7 @@ elif watson_response['entities']
 					<p>Slack Bot User</p>
 					<p>Conversational</p>
 					<p>State needs to be managed</p>
-					<p>Nothing is persisted</p>
+					<p>No persistent storage</p>
 				</section>
 				<section>
 					<h2>Recipe Bot Persistence</h2>
