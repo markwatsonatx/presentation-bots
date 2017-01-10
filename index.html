@@ -761,7 +761,6 @@ elif watson_response['entities']
 					<h2>Favorite Dialog</h2>
 					<img src="img/recipe_bot_wc_dialog_favorite.png">
 				</section>
-				
 				<section>
 					<h2>Context</h2>
 					<pre>
@@ -774,6 +773,20 @@ def handle_favorites_message(self, state):
     recipes = self.recipe_store.find_favorite_recipes_for_user...
     					</code>
 					</pre>
+				</section>
+				<section>
+					<h2>Gremlin Query</h2>
+					<pre>
+						<code data-trim data-noescape>
+g.V().hasLabel("person").has("name", "CURRENT_USER")
+.outE().order().by("count", decr)
+.inV().hasLabel("recipe").limit(5)
+    					</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Recommendations with IBM Graph</h2>
+					<img src="img/recipe_bot_recommended.png">
 				</section>
 				<section>
 					<h2>Bots</h2>
@@ -805,7 +818,7 @@ def handle_favorites_message(self, state):
 						<tr>
 							<td><b>Services</b></td>
 							<td>Cloudant</td>
-							<td>Hacker News API</td>
+							<td>Hacker News API, Redis</td>
 							<td>Watson Conversation, IBM Graph, Spoonacular</td>
 						</tr>
 					</table>
