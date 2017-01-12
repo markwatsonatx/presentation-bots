@@ -8,4 +8,4 @@ cd presentation-bots
 npm start
 ```
 
-Open your browser and go to [http://localhost:8000](]http://localhost:8000).
+Open your browser and go to [http://localhost:8000](http://localhost:8000).
