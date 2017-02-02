@@ -741,20 +741,38 @@ elif watson_response['entities']
 				<section>
 					<h2> Recipe Bot with IBM Graph</h2>
 					<img src="img/recipe_bot_graph_dashboard3.png">
+					<pre>
+						<code data-trim data-noescape>
+{
+   "type": "edge",
+   "outVLabel": "person",
+   "outV": 4256,
+   "label": "selects",
+   "inVLabel": "ingredient",
+   "inV": 40964168,
+   "properties": {
+      "count": 3
+   }
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2> Recipe Bot with IBM Graph</h2>
 					<img src="img/recipe_bot_graph_dashboard4.png">
 					<pre>
 						<code data-trim data-noescape>
-{                                      {
-   "type": "edge",                        "type": "edge",
-   "outVLabel": "person",                 "outVLabel": "person",
-   "outV": 4256,                          "outV": 4256,
-   "label": "selects",                    "label": "selects",
-   "inVLabel": "ingredient",              "inVLabel": "recipe",
-   "inV": 40964168,                       "inV": 4296,
-   "properties": {                        "properties": {
-      "count": 3                             "count": 2
-   }                                      }
-}                                      }
+{
+   "type": "edge",
+   "outVLabel": "person",
+   "outV": 4256,
+   "label": "selects",
+   "inVLabel": "recipe",
+   "inV": 4296,
+   "properties": {
+      "count": 2
+   }
+}
 						</code>
 					</pre>
 				</section>
@@ -798,6 +816,37 @@ g.V().hasLabel("person").has("name", "CURRENT_USER")
 					<img src="img/recipe_bot_recommended.png">
 				</section>
 				<section>
+					<h2> Recommendations with IBM Graph</h2>
+					<img src="img/recipe_bot_graph_dashboard5.png">
+					<pre>
+						<code data-trim data-noescape>
+{
+   "type": "edge",
+   "outVLabel": "recipe",
+   "outV": 4296,
+   "label": "has",
+   "inVLabel": "ingredient",
+   "inV": 40964168
+}
+						</code>
+					</pre>
+				</section>
+				<section>
+					<img src="img/recipe_bot_graph.png">
+				</section>
+				<section>
+					<h2>Gremlin Query</h2>
+					<pre>
+						<code data-trim data-noescape>
+g.V().hasLabel("ingredient").has("name","onions")
+.in("has")
+.inE().has("count",gt(1)).order().by("count", decr)
+.outV().hasLabel("person").has("name",neq("CURRENT_USER"))
+.path();
+    					</code>
+					</pre>
+				</section>
+				<section>
 					<h2>Bots</h2>
 					<table class="reveal">
 						<tr>
@@ -839,12 +888,6 @@ g.V().hasLabel("person").has("name", "CURRENT_USER")
 						<a href="https://medium.com/ibm-watson-data-lab" target="_blank">medium.com/ibm-watson-data-lab</a><br>
 						<a href="https://github.com/markwatsonatx/presentation-bots" target="_blank">github.com/markwatsonatx/presentation-bots</a>
 					</p>
-					<h2>@Codemash</h2>
-					<p>Raj Singh: <b><i>Safety-enabled apps: using Boston crime data to make Pokemon Go a safer space</i></b><br>
-						Tomorrow, 1/13 12:15 pm<br>
-						Room: Rosewood</p>
-					<p>IBM Cabana at Waterpark Party<br>
-						Tonight, 1/12</p>
 				</section>
 				<!--<section>-->
 					<!--<h2>Custom Bot Platform/Offline Support</h2>-->
