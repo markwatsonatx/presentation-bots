@@ -23,7 +23,7 @@
 		</script>
 	</head>
 	<body>
-		<div class="reveal">
+		<div class="reveal" style="background-color: #FBF8E8">
 			<div style="position: absolute; top: 40px; right: 40px;"><h5>@markwatsonatx</h5></div>
 			<div class="slides">
 				<section>
@@ -500,7 +500,6 @@ payload=%7B%22actions%22%3A%5B%7B%22name%22%3A%22hn_top_stories_more%22
 				</section>
 				<section>
 					<h2>Slack Bot User</h2>
-					<!--<p>Enable teams to <b>conversationally</b> interact with external services or your custom code.</p>-->
 					<img src="img/slack_bot_user1.png">
 					<img src="img/slack_bot_user2.png">
 				</section>
@@ -695,83 +694,30 @@ elif watson_response['entities']
 					<p>Track user habits</p>
 					<p>Provide a more personal experience</p>
 				</section>
-				<!--<section>-->
-					<!--<h2> Recipe Bot with Cloudant</h2>-->
-					<!--<img src="img/recipe_bot_arch_cloudant.png">-->
-				<!--</section>-->
-				<!--<section>-->
-					<!--<h2> Recipe Bot with Cloudant</h2>-->
-					<!--<pre>-->
-						<!--<code data-trim data-noescape>-->
-<!--{-->
-   <!--"type": "user",-->
-   <!--"name": "UXXXXXXXX",-->
-   <!--"ingredients": [{-->
-      <!--"name": "tomatoes",-->
-      <!--"count": 3-->
-   <!--}],-->
-   <!--"cuisines": [{-->
-      <!--"name": "italian",-->
-      <!--"count": 4-->
-   <!--}],-->
-   <!--"recipes": [{-->
-      <!--"id": "833235",-->
-      <!--"title": "Sliced Cucumber and Tomato Salad",-->
-      <!--"count": 2-->
-   <!--}]-->
-<!--}-->
-						<!--</code>-->
-					<!--</pre>-->
-				<!--</section>-->
 				<section>
-					<h2>Recipe Bot with IBM Graph</h2>
-					<img src="img/recipe_bot_arch_graph.png">
+					<h2>Recipe Bot with Cloudant</h2>
+					<img src="img/recipe_bot_arch_cloudant.png">
 				</section>
 				<section>
-					<h2>IBM Graph</h2>
-					<p>Fully-managed Graph DBaaS</p>
-					<p>Based on Apache TinkerPop</p>
-					<p>Gremlin Query Language</p>
-					<p><a href="https://ibm.com/us-en/marketplace/graph" target="_blank">ibm.com/us-en/marketplace/graph</a></p>
-				</section>
-				<section>
-					<h2> Recipe Bot with IBM Graph</h2>
-					<img src="img/recipe_bot_graph_dashboard1.png">
-				</section>
-				<section>
-					<h2> Recipe Bot with IBM Graph</h2>
-					<img src="img/recipe_bot_graph_dashboard3.png">
+					<h2> Recipe Bot with Cloudant</h2>
 					<pre>
 						<code data-trim data-noescape>
 {
-   "type": "edge",
-   "outVLabel": "person",
-   "outV": 4256,
-   "label": "selects",
-   "inVLabel": "ingredient",
-   "inV": 40964168,
-   "properties": {
+  "_id": "971e1fb0322f12cfceac427a1f8a674e",
+  "name": "U3XXXXXXX",
+  "ingredients": [{
+      "name": "tomatoes",
+      "count": 9
+  }],
+  "cuisines": [{
+      "name": "italian",
+      "count": 5
+  }],
+  "recipes": [{
+      "id": "833235",
+      "title": "Sliced Cucumber and Tomato Salad",
       "count": 3
-   }
-}
-						</code>
-					</pre>
-				</section>
-				<section>
-					<h2> Recipe Bot with IBM Graph</h2>
-					<img src="img/recipe_bot_graph_dashboard4.png">
-					<pre>
-						<code data-trim data-noescape>
-{
-   "type": "edge",
-   "outVLabel": "person",
-   "outV": 4256,
-   "label": "selects",
-   "inVLabel": "recipe",
-   "inV": 4296,
-   "properties": {
-      "count": 2
-   }
+  }]
 }
 						</code>
 					</pre>
@@ -812,41 +758,6 @@ g.V().hasLabel("person").has("name", "CURRENT_USER")
 					</pre>
 				</section>
 				<section>
-					<h2>Recommendations with IBM Graph</h2>
-					<img src="img/recipe_bot_recommended.png">
-				</section>
-				<section>
-					<h2> Recommendations with IBM Graph</h2>
-					<img src="img/recipe_bot_graph_dashboard5.png">
-					<pre>
-						<code data-trim data-noescape>
-{
-   "type": "edge",
-   "outVLabel": "recipe",
-   "outV": 4296,
-   "label": "has",
-   "inVLabel": "ingredient",
-   "inV": 40964168
-}
-						</code>
-					</pre>
-				</section>
-				<section>
-					<img src="img/recipe_bot_graph.png">
-				</section>
-				<section>
-					<h2>Gremlin Query</h2>
-					<pre>
-						<code data-trim data-noescape>
-g.V().hasLabel("ingredient").has("name","onions")
-.in("has")
-.inE().has("count",gt(1)).order().by("count", decr)
-.outV().hasLabel("person").has("name",neq("CURRENT_USER"))
-.path();
-    					</code>
-					</pre>
-				</section>
-				<section>
 					<h2>Bots</h2>
 					<table class="reveal">
 						<tr>
@@ -877,7 +788,7 @@ g.V().hasLabel("ingredient").has("name","onions")
 							<td><b>Services</b></td>
 							<td>Cloudant</td>
 							<td>Hacker News API, Redis</td>
-							<td>Watson Conversation, IBM Graph, Spoonacular</td>
+							<td>Watson Conversation, Cloudant, Spoonacular</td>
 						</tr>
 					</table>
 				</section>
