@@ -748,16 +748,6 @@ def handle_favorites_message(self, state):
 					</pre>
 				</section>
 				<section>
-					<h2>Gremlin Query</h2>
-					<pre>
-						<code data-trim data-noescape>
-g.V().hasLabel("person").has("name", "CURRENT_USER")
-.outE().order().by("count", decr)
-.inV().hasLabel("recipe").limit(5)
-    					</code>
-					</pre>
-				</section>
-				<section>
 					<h2>Bots</h2>
 					<table class="reveal">
 						<tr>
