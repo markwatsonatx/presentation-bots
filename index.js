@@ -1,3 +1,5 @@
+'use strict';
+
 const cfenv = require('cfenv');
 const express = require('express');
 
