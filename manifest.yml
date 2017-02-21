@@ -6,3 +6,4 @@ applications:
   name: bots-presentation 
   host: bots-${random-word}
   disk_quota: 1024M
+  command: node index.js
