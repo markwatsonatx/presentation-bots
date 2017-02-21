@@ -9,6 +9,5 @@ log/*.log
 tmp/**
 node_modules/
 .sass-cache
-manifest.yml
 css/reveal.min.css
 js/reveal.min.js
